@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Mr ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+/* 🔐 PASSWORD SCREEN */
+#lockScreen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9999;
+}
+
+input {
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+.lock-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #ff4b5c;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+/* 💘 MAIN CONTENT */
+#mainContent {
+    display: none;
+    background: url('bg.webp') no-repeat center center/cover;
+    text-align: center;
+    padding-top: 80px;
+    color: #fff;
+    min-height: 100vh;
+}
+
+/* 🌙 Overlay */
+#mainContent::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: -1;
+}
+
+h1 { font-size: 28px; }
+
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    background: #ff4b5c;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    cursor: pointer;
+}
+
+#message {
+    margin-top: 40px;
+    font-size: 22px;
+    min-height: 60px;
+    width: 80%;
+    margin: auto;
+    line-height: 1.6;
+}
+
+/* ❤️ hearts */
+.heart {
+    position: fixed;
+    top: -10px;
+    font-size: 24px;
+    animation: fall 4s linear infinite;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* 💔 FINAL SCREEN */
+#finalScreen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9998;
+}
+
+.final-text {
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+.yes-btn {
+    padding: 12px 25px;
+    font-size: 18px;
+    background: #ff4b5c;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔐 PASSWORD SCREEN -->
+<div id="lockScreen">
+    <h2>Only you know this... 🔐</h2>
+    <input type="password" id="passInput" placeholder="Enter something special..." />
+    <button class="lock-btn" onclick="checkPass()">Unlock ❤️</button>
+    <p id="error" style="color:red;"></p>
+</div>
+
+<!-- 💘 MAIN CONTENT -->
+<div id="mainContent">
+
+<h1>Hey Mr ❤️</h1>
+
+<button onclick="startSurprise()">Enna Yosikuringa? click pannunga! 😊</button>
+
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div id="message"></div>
+
+<div id="finalScreen">
+    <div class="final-text">Will you come back to me? 💔</div>
+    <button class="yes-btn" onclick="showLove()">YES ❤️</button>
+</div>
+
+</div>
+
+<script>
+/* 🔐 PASSWORD */
+const correctPassword = "karthi";
+
+function checkPass() {
+    let input = document.getElementById("passInput").value;
+    if (input === correctPassword) {
+        document.getElementById("lockScreen").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+    } else {
+        document.getElementById("error").innerText = "Wrong password 😢";
+    }
+}
+
+/* 💬 MESSAGES */
+const messages = [
+    "Poda kaatan... 😂😅",
+    "You are always special to me",
+    "I believe in you that neenga enakaaga varuvinga nu na whole hearted ah nambhuren ❤️",
+    "I am always here for you",
+    "",
+    "As we discussed...",
+    "I wanna future with you...",
+    "In which you are the main character...",
+    "As my husband, lover, friend and everything 💖",
+    "",
+    "Namakulla sanda vanthalum...",
+    "Pesama poidatha...",
+    "Two minutes communicate panni solve pannitu...",
+    "Tea kudika poidalam ok va? ☕🥺",
+    "",
+    "Na usual ah keakura vishayam...",
+    "Ennaiya vitu poiduvingala nu...",
+    "Athu annoying ah irukum nu theriyum...",
+    "But please accept pannunga...",
+    "Until we become together in this society ❤️",
+    "",
+    "I promise...",
+    "I will always love you...",
+    "The same as I am now 💔❤️"
+];
+
+let i = 0, j = 0;
+
+function typeEffect() {
+    if (i < messages.length) {
+        if (j < messages[i].length) {
+            document.getElementById("message").innerHTML += messages[i].charAt(j);
+            j++;
+            setTimeout(typeEffect, 45);
+        } else {
+            document.getElementById("message").innerHTML += "<br><br>";
+            i++; j = 0;
+            setTimeout(typeEffect, 700);
+        }
+    } else {
+        setTimeout(showFinalScreen, 2500);
+    }
+}
+
+function startSurprise() {
+    document.querySelector("#mainContent button").style.display = "none";
+    document.getElementById("bgMusic").play();
+    typeEffect();
+}
+
+function showFinalScreen() {
+    document.getElementById("finalScreen").style.display = "flex";
+}
+
+function showLove() {
+    document.querySelector(".final-text").innerHTML = "I knew it... ❤️🥺<br><br>Come back soon...";
+    document.querySelector(".yes-btn").style.display = "none";
+
+    let music = document.getElementById("bgMusic");
+    let fade = setInterval(() => {
+        if (music.volume > 0.05) {
+            music.volume -= 0.05;
+        } else {
+            clearInterval(fade);
+        }
+    }, 200);
+
+    setInterval(createHeart, 300);
+}
+
+function createHeart() {
+    let heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 4000);
+}
+</script>
+
+</body>
+</html>
