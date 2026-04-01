@@ -83,12 +83,13 @@ button {
     line-height: 1.6;
 }
 
-/* ❤️ hearts */
+/* ❤️ HEARTS (FIXED) */
 .heart {
     position: fixed;
     top: -10px;
     font-size: 24px;
     animation: fall 4s linear infinite;
+    z-index: 10000; /* 🔥 important fix */
 }
 
 @keyframes fall {
@@ -115,6 +116,7 @@ button {
 .final-text {
     font-size: 28px;
     margin-bottom: 30px;
+    text-align: center;
 }
 
 .yes-btn {
@@ -201,7 +203,8 @@ const messages = [
     "The same as I am now 💔❤️"
 ];
 
-let i = 0, j = 0;
+let i = 0;
+let j = 0;
 
 function typeEffect() {
     if (i < messages.length) {
@@ -211,7 +214,8 @@ function typeEffect() {
             setTimeout(typeEffect, 45);
         } else {
             document.getElementById("message").innerHTML += "<br><br>";
-            i++; j = 0;
+            i++;
+            j = 0;
             setTimeout(typeEffect, 700);
         }
     } else {
@@ -233,6 +237,7 @@ function showLove() {
     document.querySelector(".final-text").innerHTML = "I knew it... ❤️🥺<br><br>Come back soon...";
     document.querySelector(".yes-btn").style.display = "none";
 
+    // 🎵 fade music
     let music = document.getElementById("bgMusic");
     let fade = setInterval(() => {
         if (music.volume > 0.05) {
@@ -242,7 +247,8 @@ function showLove() {
         }
     }, 200);
 
-    setInterval(createHeart, 300);
+    // ❤️ hearts rain (FIXED)
+    setInterval(createHeart, 250);
 }
 
 function createHeart() {
@@ -252,7 +258,9 @@ function createHeart() {
     heart.style.left = Math.random() * 100 + "vw";
     document.body.appendChild(heart);
 
-    setTimeout(() => heart.remove(), 4000);
+    setTimeout(() => {
+        heart.remove();
+    }, 4000);
 }
 </script>
 
